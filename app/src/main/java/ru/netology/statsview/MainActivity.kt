@@ -15,7 +15,9 @@ class MainActivity : AppCompatActivity() {
         val view = findViewById<StatsView>(R.id.statsView)
         val runnable = object : Runnable {
             override fun run(){
-                view.data = listOf(0.25F, 0.25F, Random.nextFloat() * 0.25F)
+                val data = listOf(600F, 400F, Random.nextFloat() * 700F,  500F)
+                val dataSum =  data.sum()
+                view.data = data.map{it/dataSum}
                 Handler(Looper.getMainLooper()).postDelayed(this, 2_500)
             }
         }

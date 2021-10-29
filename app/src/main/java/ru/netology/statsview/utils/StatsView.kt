@@ -1,13 +1,11 @@
 package ru.netology.statsview.utils
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.PointF
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.withStyledAttributes
+import androidx.core.graphics.PaintCompat
 import ru.netology.statsview.R
 import kotlin.math.min
 import kotlin.random.Random
@@ -42,6 +40,7 @@ init{
             AndroidUtils.dp(context, 40F).toFloat())
         linedWidth = getDimensionPixelSize(R.styleable.StatsView_lineWidth,
             AndroidUtils.dp(context, 15F))
+
         paint.strokeWidth = linedWidth.toFloat()
         colors = listOf(
             getColor(R.styleable.StatsView_color1, getRandomColor()),
@@ -67,12 +66,24 @@ init{
         if(data.isEmpty())
             return
         var startAngle = -90F
+        var addAngle = startAngle
         data.forEachIndexed { index,item ->
             val angle = item * 360F
+//  **********************   Задача Not Filled ********************
+//            if(index.equals(3)){
+//                paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.DST_OVER))
+//            } else{
+//                paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC))
+//            }
             paint.color = colors.getOrElse(index) {getRandomColor()}
             canvas.drawArc(circle, startAngle, angle,false,paint)
+            if(index.equals(0)){
+                addAngle = angle/2
+            }
             startAngle += angle
         }
+        paint.color = colors.getOrElse(0) {getRandomColor()}
+        canvas.drawArc(circle, startAngle, addAngle,false,paint)
         canvas.drawText(
             "%.2f%%".format(data.sum()*100),
             center.x,

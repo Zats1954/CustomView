@@ -13,7 +13,6 @@
         android:text="Hello World!"
         app:textSize="14sp"
         app:lineWidth="50dp"
-
         app:color2="#834823"
         app:color3="#d71420"
         app:layout_constraintBottom_toBottomOf="parent"
